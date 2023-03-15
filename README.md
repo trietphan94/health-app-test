@@ -4,11 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Development Environment
 Node.js v16.15.1
 
-npm 9.6.1
+Npm 9.6.1
 
-react ^18.2.0
+React ^18.2.0
 
-yarn ^1.22.19
+Yarn ^1.22.19
+
+Tailwind CSS (^3.2.7)
+
+TypeScript (^4.9.5)
 
 ## Routing
 
