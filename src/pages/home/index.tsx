@@ -3,9 +3,119 @@ import imgPraph from '@/images/graph.png'
 import imgMain from '@/images/main_photo.jpg'
 import imgCircle from '@/images/circle.png'
 import imgHex from '@/images/hex.png'
+import imgM01 from '@/images/m01.jpg'
+import imgM02 from '@/images/m02.jpg'
+import imgM03 from '@/images/m03.jpg'
+import imgL01 from '@/images/l01.jpg'
+import imgL02 from '@/images/l02.jpg'
+import imgL03 from '@/images/l03.jpg'
+import imgD01 from '@/images/d01.jpg'
+import imgD02 from '@/images/d02.jpg'
+import imgS01 from '@/images/s01.jpg'
 import ScrollTop from '@/components/scroll-top'
+import {useEffect, useState} from "react";
 
 const Home = () => {
+
+  const dishes = [{
+    name: '05.20.Morning',
+    srcImg: imgM01,
+    type: 'morning',
+    sort: '201'
+  }, {
+    name: '05.21.Morning',
+    srcImg: imgM02,
+    type: 'morning',
+    sort: '211'
+  }, {
+    name: '05.22.Morning',
+    srcImg: imgM03,
+    type: 'morning',
+    sort: '221'
+  }, {
+    name: '05.20.Lunch',
+    srcImg: imgL01,
+    type: 'lunch',
+    sort: '202'
+  }, {
+    name: '05.21.Lunch',
+    srcImg: imgL02,
+    type: 'lunch',
+    sort: '212'
+  }, {
+    name: '05.22.Lunch',
+    srcImg: imgL03,
+    type: 'lunch',
+    sort: '222'
+  }, {
+    name: '05.20.Dinner',
+    srcImg: imgD01,
+    type: 'dinner',
+    sort: '203'
+  }, {
+    name: '05.21.Dinner',
+    srcImg: imgD02,
+    type: 'dinner',
+    sort: '213'
+  }, {
+    name: '05.22.Dinner',
+    srcImg: imgD02,
+    type: 'dinner',
+    sort: '223'
+  }, {
+    name: '05.20.Snack',
+    srcImg: imgS01,
+    type: 'snack',
+    sort: '204'
+  }, {
+    name: '05.21.Snack',
+    srcImg: imgS01,
+    type: 'snack',
+    sort: '214'
+  }, {
+    name: '05.22.Snack',
+    srcImg: imgS01,
+    type: 'snack',
+    sort: '224'
+  }];
+
+  // Filter by dish type
+  const [dishType, setDishType] = useState('');
+
+  // Load more button
+  const PAGE_SIZE = 8;
+
+  const [index, setIndex] = useState(0);
+
+  const [visibleDishes, setVisibleDishes] = useState<{ name: string; srcImg: string; type: string; sort: string; }[]>([]);
+
+  useEffect(() => {
+    const numberOfItems = PAGE_SIZE * (index + 1);
+
+    const newArray = [];
+    let sortedDishes = [];
+    if (dishType) {
+      sortedDishes = dishes.filter(dish => dish.type === dishType).sort((a, b) => (a.sort < b.sort ? -1 : 1));
+    } else {
+      sortedDishes = dishes.sort((a, b) => (a.sort < b.sort ? -1 : 1));
+    }
+    for (let i = 0; i < sortedDishes.length; i++) {
+      if (i < numberOfItems)
+        newArray.push(sortedDishes[i])
+    }
+
+    setVisibleDishes(newArray);
+
+  }, [index, dishType])
+
+  const onFilter = (type: string) => {
+    setDishType(type);
+  }
+
+  const onLoadMore = () => {
+    setIndex(index + 1);
+  }
+
   return (
     <>
       <div className="md:grid md:grid-cols-5">
@@ -25,97 +135,46 @@ const Home = () => {
       </div>
       <div className="wrapper-content">
         <div className="grid grid-cols-2 gap-6 my-5 md:gap-3 md:grid-cols-4 place-items-center">
-          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}>
+          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}
+                onClick={() => onFilter('morning')}>
             <IconFolk/>
             <span>Morning</span>
           </Link>
-          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}>
+          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}
+                onClick={() => onFilter('lunch')}>
             <IconFolk/>
             <span>Lunch</span>
           </Link>
-          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}>
+          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}
+                onClick={() => onFilter('dinner')}>
             <IconFolk/>
             <span>Dinner</span>
           </Link>
-          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}>
+          <Link to="#" className="hex-box" style={{backgroundImage: `url(${imgHex})`}}
+                onClick={() => onFilter('snack')}>
             <IconCup/>
             <span>Snack</span>
           </Link>
         </div>
-
         <div className="relative">
           <div className="grid grid-cols-2 gap-5 mt-3 mb-10 md:grid-cols-4 md:gap-3">
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
+            {visibleDishes.map((dish, index) => {
+              return (<div className="relative" key={index}>
+                <Link to="#">
+                  <img src={dish.srcImg} className="object-cover w-full h-full lg:w-[234px] lg:h-[234px]" alt=""/>
+                  <span className="labelLeft">
+                  {dish.name}
                 </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
-            <div className="relative">
-              <Link to="#">
-                <img src={'https://placehold.co/400'} alt=""/>
-                <span className="labelLeft">
-                  05.21.Morning
-                </span>
-              </Link>
-            </div>
+                </Link>
+              </div>)
+            })}
           </div>
 
           <ScrollTop/>
         </div>
 
         <div className="mb-12 text-center">
-          <Link to="#" className="btn">記録をもっと見る</Link>
+          <Link to="#" className="btn" onClick={() => onLoadMore()}>記録をもっと見る</Link>
         </div>
       </div>
     </>

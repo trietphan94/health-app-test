@@ -5,26 +5,26 @@
 @tailwind utilities;
 
 .wrapper-content {
-  @apply max-w-[960px] mx-auto px-3 md:px-0
+    @apply max-w-[960px] mx-auto px-3 md:px-0
 }
 
 .hex-box {
-  @apply justify-center items-center text-white w-[116px] h-[134px] flex flex-col bg-cover bg-center
+    @apply justify-center items-center text-white w-[116px] h-[134px] flex flex-col bg-cover bg-center
 }
 
 .btn {
-  @apply font-notoSansJP text-lg bg-gradient-to-b from-primary-300 to-primary-400 text-white px-8 py-3 rounded
+    @apply font-notoSansJP text-lg bg-gradient-to-b from-primary-300 to-primary-400 text-white px-8 py-3 rounded
 }
 
 .labelLeft {
-  @apply text-white bg-primary-300 text-[15px] absolute left-0 bottom-0 px-3 py-0.5
+    @apply text-white bg-primary-300 text-[15px] absolute left-0 bottom-0 px-3 py-0.5
 }
 
-.yellow-box{
-  @apply bg-primary-300 items-center relative md:max-w-[288px] p-6
+.yellow-box {
+    @apply bg-primary-300 items-center relative lg:w-[288px] lg:h-[288px] p-6
 }
 
-.btn-orange{
-  @apply bg-primary-400 px-4 py-1 text-center text-white font-notoSansJP text-sm w-40 block
+.btn-orange {
+    @apply bg-primary-400 px-4 py-1 text-center text-white font-notoSansJP text-sm w-40 block
 }
 

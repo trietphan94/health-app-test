@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-const Footer = () =>{
+const Footer = () => {
   return (
     <footer className="text-white py-14 bg-dark-500 font-notoSansJP">
       <div className="wrapper-content">

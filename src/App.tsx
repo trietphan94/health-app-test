@@ -1,55 +1,53 @@
-// import './App.css';
 import React from 'react';
-import { Routes, Route } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 
 import Layout from "@/components/layout";
 import Loading from "@/components/loading";
 import Home from '@/pages/home'
+import useToken from './useToken';
+
 const NoMatch = React.lazy(() => import("@/pages/404"));
 const MyRecord = React.lazy(() => import("@/pages/my-record"));
-const Challenge = React.lazy(() => import("@/pages/challenge"));
-const Notice = React.lazy(() => import("@/pages/notice"));
+const Column = React.lazy(() => import("@/pages/column"));
 const Login = React.lazy(() => import("@/pages/login"));
 
 const App = () => {
+  const {token, setToken} = useToken();
+  if (!token && window.location.pathname.indexOf('column') < 0) {
+    return <Login setToken={setToken}/>
+  }
+
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<Layout/>}>
+          <Route index element={<Home/>}/>
           <Route
             path="login"
             element={
-              <React.Suspense fallback={<Loading />}>
-                <Login />
+              <React.Suspense fallback={<Loading/>}>
+                <Login setToken={setToken}/>
               </React.Suspense>
             }
           />
           <Route
             path="my-record"
             element={
-              <React.Suspense fallback={<Loading />}>
-                <MyRecord />
+              <React.Suspense fallback={<Loading/>}>
+                <MyRecord/>
               </React.Suspense>
             }
           />
           <Route
-            path="challenge"
+            path="column"
             element={
-              <React.Suspense fallback={<Loading />}>
-                <Challenge />
+              <React.Suspense fallback={<Loading/>}>
+                <Column/>
               </React.Suspense>
             }
           />
-           <Route
-            path="notice"
-            element={
-              <React.Suspense fallback={<Loading />}>
-                <Notice />
-              </React.Suspense>
-            }
-          />
-          <Route path="*" element={<NoMatch />} />
+          <Route path="*" element={<NoMatch/>}/>
         </Route>
       </Routes>
     </div>
